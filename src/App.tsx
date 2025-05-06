@@ -2,13 +2,17 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { GameProvider } from './context/GameContext';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useGame } from './context/GameContext';
-
+import { Analytics } from "@vercel/analytics/react"
 // We'll create these components next
 import Welcome from './pages/Welcome';
 import Game from './pages/Game';
 import Loading from './components/Loading';
 
 const theme = extendTheme({
+  config: {
+    initialColorMode: 'light',
+    useSystemColorMode: false,
+  },
   styles: {
     global: {
       body: {
@@ -35,6 +39,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <Analytics />
       <GameProvider>
         <Router>
           <Routes>

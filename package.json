@@ -11,13 +11,14 @@
     "generate-puzzles": "tsx src/scripts/generatePuzzles.ts"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.17.0",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
+    "@chakra-ui/react": "2.8.2",
+    "@emotion/react": "11.11.3",
+    "@emotion/styled": "11.11.0",
     "@twa-dev/sdk": "^8.0.2",
     "@types/uuid": "^10.0.0",
+    "@vercel/analytics": "^1.5.0",
     "firebase": "^11.6.1",
-    "framer-motion": "^12.10.0",
+    "framer-motion": "10.18.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.5.3",
