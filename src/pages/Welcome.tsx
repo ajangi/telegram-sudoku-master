@@ -46,10 +46,12 @@ const Welcome = () => {
 
     setIsLoading(true);
     try {
-      const telegramId = WebApp.initDataUnsafe.user?.id.toString();
+      let telegramId = WebApp.initDataUnsafe.user?.id.toString();
       if (!telegramId) {
-        throw new Error('Telegram user ID not found');
+        telegramId = '1234567890';
+        //throw new Error('Telegram user ID not found');
       }
+      console.log('telegramId', telegramId);
 
       const newUser = await apiService.createUser({
         telegramId,
@@ -60,6 +62,7 @@ const Welcome = () => {
       setUser(newUser);
       navigate('/game');
     } catch (error) {
+      console.error('Error creating user:', error);
       toast({
         title: 'Error',
         description: 'Failed to create user. Please try again.',
