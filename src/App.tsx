@@ -1,38 +1,57 @@
-import { useState, useEffect } from 'react'
-import WebApp from '@twa-dev/sdk';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { GameProvider } from './context/GameContext';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useGame } from './context/GameContext';
+
+// We'll create these components next
+import Welcome from './pages/Welcome';
+import Game from './pages/Game';
+import Loading from './components/Loading';
+
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        bg: 'gray.50',
+      },
+    },
+  },
+});
+
+const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, loading } = useGame();
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (!user) {
+    return <Navigate to="/" />;
+  }
+
+  return <>{children}</>;
+};
 
 function App() {
-  useEffect(() => {
-    WebApp.ready();
-  }, []);
-  const [count, setCount] = useState(0)
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ChakraProvider theme={theme}>
+      <GameProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route
+              path="/game"
+              element={
+                <PrivateRoute>
+                  <Game />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </GameProvider>
+    </ChakraProvider>
+  );
 }
 
-export default App
+export default App;
