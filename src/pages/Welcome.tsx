@@ -245,7 +245,7 @@ const Welcome = () => {
   };
 
   return (
-    <Container maxW="container.md" py={5} height="100vh" display="flex" alignItems="center">
+    <Container maxW="container.md" p={3} height="auto" minHeight="100vh">
       <MotionBox
         initial="hidden"
         animate="visible"
@@ -253,19 +253,20 @@ const Welcome = () => {
         bg={bgColor}
         borderRadius="xl"
         boxShadow="2xl"
-        overflow="hidden"
-        maxH={{ base: "95vh", md: "90vh" }}
+        overflow="visible"
         w="full"
+        mb={4}
       >
         <Flex direction="column" align="center">
           {/* Header section with game logo/title */}
           <Box
             w="full"
             bg="blue.600"
-            p={6}
+            p={5}
             textAlign="center"
             position="relative"
             overflow="hidden"
+            borderTopRadius="xl"
           >
             <Box
               position="absolute"
@@ -304,15 +305,13 @@ const Welcome = () => {
             </MotionBox>
           </Box>
 
-          {/* Main content - with scrollable area if needed */}
+          {/* Main content - without fixed height to allow natural scrolling */}
           <Box
-            p={{ base: 6, md: 8 }}
+            p={{ base: 5, md: 7 }}
             w="full"
-            overflowY="auto"
-            maxH={{ base: "calc(100vh - 130px)", md: "calc(100vh - 150px)" }}
           >
-            <VStack spacing={{ base: 6, md: 7 }}>
-              <MotionBox variants={itemVariants} pt={2}>
+            <VStack spacing={{ base: 5, md: 6 }}>
+              <MotionBox variants={itemVariants} pt={1}>
                 <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="medium" textAlign="center" color={headingColor}>
                   Create your player profile to start the challenge!
                 </Text>
@@ -330,21 +329,21 @@ const Welcome = () => {
                   _focus={{ borderColor: "blue.400" }}
                   _hover={{ borderColor: "blue.300" }}
                   rounded="lg"
-                  h={{ base: "52px", md: "56px" }}
+                  h={{ base: "50px", md: "56px" }}
                   fontSize={{ base: "md", md: "lg" }}
                 />
               </MotionBox>
 
-              <MotionBox w="full" variants={itemVariants} pt={2}>
-                <Flex justify="flex-start" align="center" mb={4}>
+              <MotionBox w="full" variants={itemVariants} pt={1}>
+                <Flex justify="flex-start" align="center" mb={3}>
                   <Text fontWeight="semibold" fontSize={{ base: "lg", md: "xl" }}>Select your avatar</Text>
                 </Flex>
 
                 {/* Fixed avatar grid with consistent sizing - with more breathing room */}
-                <Box width="100%" overflow="visible" mb={3}>
+                <Box width="100%" overflow="visible" mb={2}>
                   <SimpleGrid
                     columns={{ base: 4, sm: 4 }}
-                    spacing={{ base: "12px", md: "16px" }}
+                    spacing={{ base: "10px", md: "16px" }}
                     width="100%"
                   >
                     {AVATARS.map((avatar, index) => (
@@ -369,7 +368,7 @@ const Welcome = () => {
                           boxShadow={selectedAvatar === avatar ? "0 0 0 2px rgba(66, 153, 225, 0.6)" : "md"}
                           position="relative"
                           aspectRatio="1/1"
-                          minH={{ base: "65px", md: "75px" }}
+                          minH={{ base: "60px", md: "75px" }}
                         >
                           {selectedAvatar === avatar && (
                             <Badge
@@ -404,18 +403,17 @@ const Welcome = () => {
               <MotionBox
                 w="full"
                 variants={itemVariants}
-                initial={{ y: 50, opacity: 0 }}
+                initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                mt={{ base: 4, md: 6 }}
-                position="relative"
+                mt={{ base: 3, md: 5 }}
               >
-                {/* Animated button background */}
+                {/* Simplified button with animation but ensuring it's fully visible */}
                 <Button
                   colorScheme="blue"
                   size="lg"
                   w="full"
-                  h={{ base: "56px", md: "64px" }}
+                  h={{ base: "52px", md: "60px" }}
                   onClick={handleSubmit}
                   isLoading={isLoading}
                   borderRadius="lg"
@@ -423,26 +421,30 @@ const Welcome = () => {
                   fontSize={{ base: "md", md: "lg" }}
                   position="relative"
                   overflow="hidden"
-                  _before={{
-                    content: '""',
-                    position: "absolute",
-                    top: "0",
-                    right: "0",
-                    bottom: "0",
-                    left: "0",
-                    bgGradient: "linear(to-r, blue.400, purple.500, blue.600, blue.400)",
-                    backgroundSize: "300% 100%",
-                    animation: `${gradientShift} 3s ease infinite`,
-                    opacity: "1",
-                  }}
+                  bgGradient="linear(to-r, blue.400, blue.600)"
                   _hover={{
+                    bgGradient: "linear(to-r, blue.500, blue.700)",
                     transform: "translateY(-2px)",
                   }}
                   _active={{
                     transform: "translateY(0)",
                   }}
+                  boxShadow="md"
                   sx={{
                     animation: `${glowEffect} 3s ease-in-out infinite`,
+                    "&::before": {
+                      content: '""',
+                      position: "absolute",
+                      top: "0",
+                      right: "0",
+                      bottom: "0",
+                      left: "0",
+                      bgGradient: "linear(to-r, blue.400, purple.500, blue.600, blue.400)",
+                      backgroundSize: "300% 100%",
+                      animation: `${gradientShift} 3s ease infinite`,
+                      opacity: "0.8",
+                      zIndex: "0",
+                    }
                   }}
                   leftIcon={<FaPlay style={{ position: 'relative', zIndex: 2 }} />}
                 >
@@ -460,3 +462,4 @@ const Welcome = () => {
 };
 
 export default Welcome;
+
