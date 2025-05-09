@@ -7,7 +7,7 @@
     "dev": "concurrently \"vite\" \"vercel dev\"",
     "dev:vercel": "vercel dev",
     "dev:all": "concurrently \"npm run dev:vercel\" \"npm run dev\"",
-    "build": "vite build && tsc api/index.ts --outDir api/dist",
+    "build": "vite build && tsc",
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-puzzles": "tsx src/scripts/generatePuzzles.ts"
