@@ -215,13 +215,12 @@ const Welcome = () => {
 
     setIsLoading(true);
     try {
-      let telegramId = WebApp.initDataUnsafe.user?.id.toString();
+      let telegramId = WebApp.initDataUnsafe.user?.id?.toString();
       if (!telegramId) {
         telegramId = '1234567890';
         //throw new Error('Telegram user ID not found');
       }
-      console.log('telegramId', telegramId);
-
+      // Call the backend API to create the user in Firebase
       const newUser = await apiService.createUser({
         telegramId,
         name: name.trim(),
